@@ -10,6 +10,8 @@
 #include "graphicsview.h"
 #include "imagegallery.h"
 #include "fileio.h"
+
+//test
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
