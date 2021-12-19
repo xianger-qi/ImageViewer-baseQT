@@ -25,6 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        aboutdialog.cpp \
         datamanager.cpp \
         fileio.cpp \
         graphicsview.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
         mainwindow.cpp
 
 HEADERS += \
+        aboutdialog.h \
         datamanager.h \
         fileio.h \
         graphicsview.h \
@@ -41,6 +43,7 @@ HEADERS += \
         singleton.h
 
 FORMS += \
+        aboutdialog.ui \
         mainwindow.ui
 
 # Default rules for deployment.

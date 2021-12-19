@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout" stretch=""/>
+   <layout class="QHBoxLayout" name="horizontalLayout"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -26,6 +26,8 @@
    <addaction name="action_Open_Image"/>
    <addaction name="action_Open_Diretory"/>
    <addaction name="actionGallery"/>
+   <addaction name="actionaction_scale"/>
+   <addaction name="action_open_About"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_Open_Image">
@@ -41,6 +43,16 @@
   <action name="actionGallery">
    <property name="text">
     <string>Gallery</string>
+   </property>
+  </action>
+  <action name="action_open_About">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionaction_scale">
+   <property name="text">
+    <string>Scale</string>
    </property>
   </action>
  </widget>

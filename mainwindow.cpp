@@ -8,10 +8,10 @@
 #include <QHBoxLayout>
 #include "datamanager.h"
 #include "graphicsview.h"
+#include "aboutdialog.h"
 #include "imagegallery.h"
 #include "fileio.h"
 
-//test
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -26,6 +26,7 @@ void MainWindow::InitUI()
 
     //status setup
     this->statusBar()->hide();
+    this->setWindowTitle("Image Viewer Supported for Multiple Image Formats: PNG, BMP, JPG, JPEG, TIF, etc... ");
 
     QWidget *central_widget = new QWidget(this);
     //gallery
@@ -81,6 +82,8 @@ void MainWindow::EngageSingalConnection()
 
     connect(this->view, &GraphicsView::SendRGB, this, &MainWindow::DisplayRGBInfo);
     connect(this->view, &GraphicsView::SendPosition, this, &MainWindow::DisplayPositionInfo);
+
+    connect(this->ui->action_open_About, &QAction::triggered, this, [this]{AboutDialog dlg(this); dlg.exec();});
 }
 
 void MainWindow::DisplayRGBInfo(double r, double g, double b)
