@@ -14,7 +14,14 @@ void DataManager::LoadImageFileFromDirectory(std::vector<QString> files_path)
     for(auto &ele: files_path)
         LoadImageFile(ele);
 
-    current_display_image = map_data_pointer[*image_order.begin()];
+    if(image_order.empty())
+    {
+        current_display_image = new QImage();
+    }
+    else {
+        current_display_image = map_data_pointer[*image_order.begin()];
+    }
+    return;
 }
 
 void DataManager::LoadImageFile(QString filename)
@@ -29,7 +36,11 @@ void DataManager::LoadImageFile(QString filename)
 void DataManager::ClearAllImage()
 {
     std::map<QString, QImage *> ().swap(map_data_pointer);
-    current_display_image = nullptr;
+    if(current_display_image != nullptr)
+    {
+        delete current_display_image;
+        current_display_image = nullptr;
+    }
 }
 
 std::tuple<double, double, double> DataManager::AccessCurrentImagePixelValue(int row, int col)

@@ -24,6 +24,8 @@ public:
     QImage &GetFirstImage();
     QImage &GetSpecifiedImage(QString filename);
 
+
+
 private:
 
     std::map<QString, QImage *> map_data_pointer;

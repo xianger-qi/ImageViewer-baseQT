@@ -30,6 +30,7 @@ SOURCES += \
         fileio.cpp \
         graphicsview.cpp \
         imagegallery.cpp \
+        imagepropertywidget.cpp \
         main.cpp \
         mainwindow.cpp
 
@@ -39,11 +40,13 @@ HEADERS += \
         fileio.h \
         graphicsview.h \
         imagegallery.h \
+        imagepropertywidget.h \
         mainwindow.h \
         singleton.h
 
 FORMS += \
         aboutdialog.ui \
+        imagepropertywidget.ui \
         mainwindow.ui
 
 # Default rules for deployment.

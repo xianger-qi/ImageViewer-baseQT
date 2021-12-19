@@ -26,6 +26,8 @@ GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView (parent), scene(new 
 
 void GraphicsView::DisplayImage(const QImage &img)
 {
+    if(img.isNull())
+        return ;
     image_item->setPixmap(QPixmap::fromImage(img));
     CalcViewPort(img.width(), img.height());
 }
@@ -44,7 +46,7 @@ void GraphicsView::mouseMoveEvent(QMouseEvent *event)
     }
 
 
-    if(image_item != nullptr)
+    if(image_item != nullptr && image_item->mapFromScene(this->mapToScene(event->pos())).x() >= 0.0 && image_item->mapFromScene(this->mapToScene(event->pos())).y() >= 0.0)
     {
         int image_pos_x = int(image_item->mapFromScene(this->mapToScene(event->pos())).x());
         int image_pos_y = int(image_item->mapFromScene(this->mapToScene(event->pos())).y());
@@ -53,6 +55,10 @@ void GraphicsView::mouseMoveEvent(QMouseEvent *event)
 
         emit SendPosition(image_pos_x, image_pos_y);
         emit SendRGB(std::get<0>(rgb_tuple), std::get<1>(rgb_tuple), std::get<2>(rgb_tuple));
+    }
+    else {
+        emit SendPosition(-1, -1);
+        emit SendRGB(0.0, 0.0, 0.0);
     }
 }
 

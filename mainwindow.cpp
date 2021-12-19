@@ -11,6 +11,7 @@
 #include "aboutdialog.h"
 #include "imagegallery.h"
 #include "fileio.h"
+#include "imagepropertywidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -39,7 +40,7 @@ void MainWindow::InitUI()
     splitor->setStretchFactor(0, 2);
     splitor->setStretchFactor(1, 1);
     splitor->setOrientation(Qt::Horizontal);
-    QWidget *property_widget = new QWidget(splitor);
+    property_widget = new ImagePropertyWidget(splitor);
     view = new GraphicsView(splitor);
     splitor->addWidget(view);
     splitor->addWidget(property_widget);
@@ -76,13 +77,12 @@ void MainWindow::EngageSingalConnection()
 {
     connect(this->ui->actionGallery, &QAction::triggered, [this]{this->m_gallery->ChangeDisplayStatus();});
     connect(this->ui->action_Open_Image, &QAction::triggered, [this]{DataManager::instance().LoadImageFile(FileIO::OpenImageFile(this));\
-    this->view->DisplayImage(DataManager::instance().GetFirstImage());});
+    DisplayImage();});
     connect(this->ui->action_Open_Diretory, &QAction::triggered, [this]{DataManager::instance().LoadImageFileFromDirectory(FileIO::OpenImageDirectory(this));\
-        this->view->DisplayImage(DataManager::instance().GetFirstImage());});
+        DisplayImage();});
 
     connect(this->view, &GraphicsView::SendRGB, this, &MainWindow::DisplayRGBInfo);
     connect(this->view, &GraphicsView::SendPosition, this, &MainWindow::DisplayPositionInfo);
-
     connect(this->ui->action_open_About, &QAction::triggered, this, [this]{AboutDialog dlg(this); dlg.exec();});
 }
 
@@ -94,8 +94,23 @@ void MainWindow::DisplayRGBInfo(double r, double g, double b)
 
 void MainWindow::DisplayPositionInfo(double row, double col)
 {
-    QString rgb_res = QString("X, Y (%1, %2)").arg(QString::number(int(col))).arg(QString::number(int(row)));
+    QString rgb_res = row >= 0.0 ? QString("X, Y (%1, %2)").arg(QString::number(int(col))).arg(QString::number(int(row))) : "Out of Image";
     position_label->setText(rgb_res);
+}
+
+void MainWindow::DisplayImage()
+{
+    QImage &img = DataManager::instance().GetFirstImage();
+    if(img.isNull())
+        return;
+
+
+    this->view->DisplayImage(img);
+    property_widget->SetImageWidth(img.width());
+    property_widget->SetImageHeight(img.height());
+//    property_widget->SetImageChannle(img.depth());
+//    property_widget->SetImageBitDepth(8);
+
 }
 
 MainWindow::~MainWindow()
